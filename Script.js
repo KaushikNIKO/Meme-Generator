@@ -1,97 +1,99 @@
-function clearAll() {
-    const meme = document.querySelector(".meme-content");
-    const joke = document.querySelector(".joke-content");
-    const quote = document.querySelector(".quote-content");
-    const riddle = document.querySelector(".riddle-content");
 
-    meme.innerHTML = "";
-    joke.innerHTML = "";
-    quote.innerHTML = "";
-    riddle.innerHTML = "";
+function clearAll() {
+
+    const memeContainer = document.querySelector('.meme-content');
+    const jokeContainer = document.querySelector('.joke-content');
+    const quoteContainer = document.querySelector('.quote-content');
+    const riddleContainer = document.querySelector('.riddle-content');
+
+    memeContainer.innerHTML = '';
+    jokeContainer.innerHTML = '';
+    quoteContainer.innerHTML = '';
+    riddleContainer.innerHTML = '';
 }
+
 
 function showMeme() {
-    // Value should be a string representing image URL
+    // Value is a string representing image URL
     const randomMemeUrl = getRandomData("memes");
-
-    const memeContainer = document.querySelector(".meme-content");
-    const newMeme = document.createElement("img");
-    newMeme.setAttribute("src", randomMemeUrl);
-
+    const container = document.querySelector('.meme-content');
+    const newImg = document.createElement('img');
+    newImg.setAttribute('src', randomMemeUrl);
     clearAll();
+    container.appendChild(newImg);
 
-    // Add the new img to the document
-    memeContainer.appendChild(newMeme);
 }
+
 
 function showJoke() {
-    // Value should be a string representing the joke
+    // Value is a string representing the joke
     const randomJokeText = getRandomData("jokes");
-
-    const jokeContainer = document.querySelector(".joke-content");
-    const newJoke = document.createElement("p");
+    const newJoke = document.createElement('p');
     newJoke.textContent = randomJokeText;
-
     clearAll();
+    document.querySelector('.joke-content').appendChild(newJoke);
 
-    // Add the new img to the document
-    jokeContainer.appendChild(newJoke);
 }
+
 
 function showQuote() {
     // Value should be in format: { quote: '', author: '' }
     const randomQuote = getRandomData("quotes");
-
-    const quoteContainer = document.querySelector(".quote-content");
-
-    const newQuoteText = document.createElement("p");
-    const newQuoteAuthor = document.createElement("p");
-    newQuoteText.textContent = randomQuote.quote;
-    newQuoteAuthor.textContent = "- " + randomQuote.author;
-
+    const newQuote = document.createElement('p');
+    const newAuthor = document.createElement('p');
+    newQuote.textContent = randomQuote.quote;
+    newAuthor.textContent = ' -' + randomQuote.author;
     clearAll();
-
-    quoteContainer.appendChild(newQuoteText);
-    quoteContainer.appendChild(newQuoteAuthor);
+    const container = document.querySelector('.quote-content');
+    container.appendChild(newQuote);
+    container.appendChild(newAuthor);
 }
+
 
 function showRiddle() {
     // Value should be in format: { question: '', answer: '' }
     const randomRiddle = getRandomData("riddles");
 
-    const riddleContainer = document.querySelector(".riddle-content");
+    const newRiddle = document.createElement('p');
+    const newAnswer = document.createElement('p');
 
-    const newRiddleText = document.createElement("p");
-    const newRiddleAnswer = document.createElement("p");
+    newRiddle.textContent = randomRiddle.question;
+    newAnswer.textContent = 'The answer: ' + randomRiddle.answer;
+    newAnswer.setAttribute('id', 'riddle-answer');
+    newAnswer.hidden = true;
 
-    newRiddleText.textContent = randomRiddle.question;
-    newRiddleAnswer.textContent = "- " + randomRiddle.answer;
-    newRiddleAnswer.setAttribute("id", "riddle-answer");
+    const container = document.querySelector('.riddle-content');
 
     clearAll();
 
-    newRiddleAnswer.hidden = true;
+    container.appendChild(newRiddle);
+    container.appendChild(newAnswer);
 
-    riddleContainer.appendChild(newRiddleText);
-    riddleContainer.appendChild(newRiddleAnswer);
 }
 
 function revealAnswers() {
-    const riddleContent = document.querySelector(".riddle-content");
-    const riddle = riddleContent.querySelector("p");
-    const riddleAnswer = document.querySelector("#riddle-answer");
 
-    if (riddle && riddleAnswer.hidden) {
-        riddleAnswer.hidden = false;
-    } else if (riddle && riddleAnswer) {
-        alert("The riddle answer is already exposed!");
-    } else {
-        alert("There is no riddle to show the answer for!");
+    const container = document.querySelector('.riddle-content');
+    const riddle = container.querySelector('p');
+    const answer = document.querySelector('#riddle-answer');
+
+    if (riddle && answer.hidden) {
+        answer.hidden = false;
     }
+    else if (riddle && !answer.hidden) {
+        alert('The answer is already revealed!!');
+    }
+    else {
+        alert('There is no riddle!!')
+    }
+
+
 }
 
+
 /**
- * This function is used to get random data
+ * This function is used to get random data.  Don't worry about how it works, just know how to use it.  Usage is pre-filled in the functions above already, but here's an explanation of the function anyways.
+ *
  * Valid arguments:
  *
  * 'memes', 'jokes', 'quotes', 'riddles'
@@ -116,12 +118,7 @@ function getRandomData(type) {
     return data[type][rn(data[type].length)];
 }
 
-// ----------------------------------------------------
-// IGNORE EVERYTHING BELOW - Used for random data
-// ----------------------------------------------------
 
-// Everything below is pre-generated so that you don't have to go find your own memes, jokes, quotes, and math problems.
-// -----------------------------------------------
 
 // Source: https://www.thecoderpedia.com/blog/programming-memes/, Reddit
 const memes = [
@@ -251,6 +248,7 @@ const riddles = [
     },
 ];
 
+// Just a little helper function
 function rn(len) {
     return Math.floor(Math.random() * len);
 }
